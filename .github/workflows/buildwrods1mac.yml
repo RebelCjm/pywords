@@ -1,0 +1,32 @@
+name: Wordpro Mac
+
+on:
+  push:
+    branches:
+      - main  # 触发条件：当推送到 main 分支时触发
+
+jobs:
+  build:
+    runs-on: macos-latest  # 使用 macOS 环境
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@2.320.0  # 检出代码
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.16.2'  # 指定 Python 版本
+
+      - name: Install dependencies
+        run: |
+          pip install pyinstaller  # 安装 PyInstaller
+
+      - name: Build Executable
+        run: |
+          pyinstaller --onefile wdpro.py  # 替换为你的脚本名
+
+      - name: Upload Executable
+        uses: actions/upload-artifact@v2.320.0
+        with:
+          name: Wdpro1
+          path: dist/wdpro  # 替换为生成的可执行文件路径
